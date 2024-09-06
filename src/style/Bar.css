@@ -1,0 +1,55 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: none;
+  font-family: "Noto Sans Lao", sans-serif;
+}
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@300&family=Pacifico&family=Playfair+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@100..900&display=swap");
+
+.bar {
+  display: flex;
+  flex-direction: column;
+ 
+  width: 250px;
+  background: rgb(0, 0, 0);
+  color: white;
+}
+.bar_1 {
+  height: 100vh;
+
+}
+ul {
+  font-family: "Noto Sans Lao", sans-serif;
+  list-style: none;
+  list-style-type: none;
+}
+ul li {
+  padding-top: 30px;
+}
+ul li a {
+  color: aliceblue;
+  text-decoration: none;
+}
+
+button {
+  color: aliceblue;
+  border: none;
+  width: 100%;
+  padding-left: 10px;
+  background: none;
+  text-align: start;
+  cursor: pointer;
+  font-size: 20px;
+  font-family: "Noto Sans Lao", sans-serif;
+}
+
+.active {
+  width: 100%;
+  height: 60px;
+  font-family: "Noto Sans Lao", sans-serif;
+  background: rgb(0, 16, 247);
+}
+
