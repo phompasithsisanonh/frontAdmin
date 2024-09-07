@@ -23,13 +23,13 @@ function ProductsAdd() {
   const [uploadError, setUploadError] = useState("");
   const [uploading, setUploading] = useState(false);
 
-  const onFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
+  // const onFileChange = (e) => {
+  //   setFile(e.target.files[0]);
+  // };
 
   const handleAddProducts = async () => {
     try {
-      if (!productsName || !nameAdmin || !date || !price || !category || !quantity || !size || !codeProducts || !file) {
+      if (!productsName || !nameAdmin || !date || !price || !category || !quantity || !size || !codeProducts ) {
         setUploadError("Please fill out all required fields and select a file.");
         return;
       }
@@ -46,7 +46,7 @@ function ProductsAdd() {
       formData.append("quantity", quantity);
       formData.append("size", size);
       formData.append("codeProducts", codeProducts);
-      formData.append("image", file);
+      // formData.append("image", file);
 
       await axios.post(
         `${process.env.REACT_APP_URL}/createProductController`,
@@ -147,7 +147,7 @@ function ProductsAdd() {
                 placeholder="Product name"
               />
             </FormControl>
-            <FormControl isRequired>
+            {/* <FormControl isRequired>
               <FormLabel>Product Image</FormLabel>
               <Input
                 type="file"
@@ -155,7 +155,7 @@ function ProductsAdd() {
                 accept="image/*"
               />
               {uploadError && <FormErrorMessage>{uploadError}</FormErrorMessage>}
-            </FormControl>
+            </FormControl> */}
             <FormControl isRequired>
               <FormLabel>Admin Name</FormLabel>
               <Input
