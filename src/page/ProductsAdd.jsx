@@ -49,7 +49,7 @@ function ProductsAdd() {
       formData.append("image", file);
 
       await axios.post(
-        "http://localhost:8000/api/v1/products/createProductController",
+        "https://backend-admin-nu.vercel.app/api/v1/products/createProductController",
         formData,
         {
           headers: {

@@ -62,7 +62,7 @@ function Customer() {
     setLoading(true);
     try {
       await axios.delete(
-        `http://localhost:8000/api/v1/products/deleteCustomer/${id}`
+        `https://backend-admin-nu.vercel.app/api/v1/products/deleteCustomer/${id}`
       );
       toast({
         title: "Customer Deleted Successfully",
@@ -90,7 +90,7 @@ function Customer() {
       setLoading(true);
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/v1/products/getCustomer?page=${page}&limit=${limit}&customerID=${customerID}`
+          `https://backend-admin-nu.vercel.app/api/v1/products/getCustomer?page=${page}&limit=${limit}&customerID=${customerID}`
         );
         setCreateData(res.data.products);
         setTotal(res.data.total);

@@ -73,7 +73,7 @@ function Order() {
     try {
       setIsLoading(true);
       await axios.post(
-        `http://localhost:8000/api/v1/products/order`,
+        `https://backend-admin-nu.vercel.app/api/v1/products/order`,
         {
           category,
           customerID,
@@ -135,7 +135,7 @@ function Order() {
       setIsLoading(true);
       try {
         const { data } = await axios.get(
-          `http://localhost:8000/api/v1/products/autocomplete?autocomplete=${productsName}`
+          `https://backend-admin-nu.vercel.app/api/v1/products/autocomplete?autocomplete=${productsName}`
         );
         setGetData(data.autocompletefindModel);
         setGetCustomer(data.productsCustomer);
