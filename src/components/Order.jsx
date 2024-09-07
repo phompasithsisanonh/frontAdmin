@@ -73,7 +73,7 @@ function Order() {
     try {
       setIsLoading(true);
       await axios.post(
-        `https://backend-admin-nu.vercel.app/api/v1/products/order`,
+        `${process.env.REACT_APP_URL}/order`,
         {
           category,
           customerID,
@@ -135,7 +135,7 @@ function Order() {
       setIsLoading(true);
       try {
         const { data } = await axios.get(
-          `https://backend-admin-nu.vercel.app/api/v1/products/autocomplete?autocomplete=${productsName}`
+          `${process.env.REACT_APP_URL}/autocomplete?autocomplete=${productsName}`
         );
         setGetData(data.autocompletefindModel);
         setGetCustomer(data.productsCustomer);
@@ -338,7 +338,32 @@ function Order() {
                 />
               </FormControl>
             </Stack>
+            <Stack direction={{ base: "column", md: "row" }} spacing={4}>
+              <FormControl>
+                <FormLabel>ຈຳນວນສິນຄ້າ</FormLabel>
+                <Input
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  placeholder="ທີ່ຢູ່ລູກຄ້າ"
+                  borderColor="gray.300"
+                  _hover={{ borderColor: "teal.500" }}
+                  _focus={{ borderColor: "teal.500" }}
+                />
+              </FormControl>
 
+
+              <FormControl>
+                <FormLabel>ຈຳນວນສິນຄ້າ</FormLabel>
+                <Input
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                  placeholder="ເບີໂທລະສັບລູກຄ້າ"
+                  borderColor="gray.300"
+                  _hover={{ borderColor: "teal.500" }}
+                  _focus={{ borderColor: "teal.500" }}
+                />
+              </FormControl>
+            </Stack>
             <FormControl>
               <FormLabel>ວັນທີ່/ເດືອນ/ປີ ສັ່ງສິນຄ້າ</FormLabel>
               <Input

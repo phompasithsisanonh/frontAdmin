@@ -56,7 +56,7 @@ function StatusProducts() {
   const updateOrderStatus = async (id, status) => {
     try {
       setIsLoading(true);
-      await axios.patch(`https://backend-admin-nu.vercel.app/api/v1/products/updateStatus/${id}`, {
+      await axios.patch(`${process.env.REACT_APP_URL}/updateStatus/${id}`, {
         status,
       });
       setCreateData((prevData) =>
@@ -86,7 +86,7 @@ function StatusProducts() {
   const deleteOrderController = async (id) => {
     try {
       setIsLoading(true);
-      await axios.delete(`https://backend-admin-nu.vercel.app/api/v1/products/deleteOrderController/${id}`);
+      await axios.delete(`${process.env.REACT_APP_URL}/deleteOrderController/${id}`);
       toast({
         title: "Deleted Successfully",
         description: "Order deleted",
@@ -113,7 +113,7 @@ function StatusProducts() {
       try {
         setIsLoading(true);
         const response = await axios.get(
-          `https://backend-admin-nu.vercel.app/api/v1/products/getAllorder?page=${page}&limit=${limit}&customerID=${customerID}`
+          `${process.env.REACT_APP_URL}/getAllorder?page=${page}&limit=${limit}&customerID=${customerID}`
         );
         setCreateData(response.data.products || []);
         setTotal(response.data.total || 0);

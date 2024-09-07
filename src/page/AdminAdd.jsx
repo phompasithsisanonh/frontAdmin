@@ -28,7 +28,7 @@ function AdminAdd() {
 
   const handleAdmin = async () => {
     try {
-      await axios.post("https://backend-admin-nu.vercel.app/api/v1/products/register", {
+      await axios.post(`${process.env.REACT_APP_URL}/register`, {
         email,
         password,
         passwordID,

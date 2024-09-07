@@ -58,7 +58,7 @@ function ListProducts() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://backend-admin-nu.vercel.app/api/v1/products/getProducts?page=${page}&limit=${limit}&price=${price}`
+        `${process.env.REACT_APP_URL}/getProducts?page=${page}&limit=${limit}&price=${price}`
       );
       setProducts(response.data.products);
       setTotal(response.data.total);
@@ -79,7 +79,7 @@ function ListProducts() {
   const fetchAlerts = useCallback(async () => {
     try {
       const res = await axios.get(
-        "https://backend-admin-nu.vercel.app/api/v1/products/alerts"
+        `${process.env.REACT_APP_URL}/alerts`
       );
       setAlerts(res.data);
     } catch (error) {
@@ -96,7 +96,7 @@ function ListProducts() {
     try {
       setLoading(true);
       await axios.delete(
-        `https://backend-admin-nu.vercel.app/api/v1/products/deleteProductsController/${id}`
+        `${process.env.REACT_APP_URL}/deleteProductsController/${id}`
       );
       toast({
         title: "Product Deleted Successfully",

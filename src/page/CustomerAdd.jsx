@@ -28,7 +28,7 @@ function CustomerAdd() {
   const handleCustomer = async () => {
     try {
       await axios.post(
-        "https://backend-admin-nu.vercel.app/api/v1/products/customer",
+        `${process.env.REACT_APP_URL}/customer`,
         {
           customerName,
           customerID,

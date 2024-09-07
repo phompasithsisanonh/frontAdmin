@@ -27,7 +27,7 @@ function Profile() {
     try {
       setIsdisper(true);
       const res = await axios.post(
-        "https://backend-admin-nu.vercel.app/api/v1/products/updateController",
+        `${process.env.REACT_APP_URL}/updateController`,
         {
           email,
           firstName,

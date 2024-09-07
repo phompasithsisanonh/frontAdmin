@@ -74,7 +74,7 @@ function Alladmin() {
         });
       } else {
         await axios.delete(
-          `https://backend-admin-nu.vercel.app/api/v1/products/delete/${id}`
+          `${process.env.REACT_APP_URL}/delete/${id}`
         );
         toast({
           title: "Delete Successful",
@@ -94,7 +94,7 @@ function Alladmin() {
   const handleBlock = async (id) => {
     setLoading(true);
     try {
-      await axios.post(`https://backend-admin-nu.vercel.app/api/v1/products/blockUser/${id}`);
+      await axios.post(`${process.env.REACT_APP_URL}/blockUser/${id}`);
       toast({
         title: "Block Successful",
         description: "User blocked successfully",
@@ -113,7 +113,7 @@ function Alladmin() {
       setLoading(true);
       try {
         const response = await axios.get(
-          `https://backend-admin-nu.vercel.app/api/v1/products/getAllAdmin?page=${page}&limit=${limit}&customerID=${passwordID}`
+          `${process.env.REACT_APP_URL}/getAllAdmin?page=${page}&limit=${limit}&customerID=${passwordID}`
         );
         setCreateData(response.data.products);
         setTotal(response.data.total);

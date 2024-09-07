@@ -49,7 +49,7 @@ function ProductsAdd() {
       formData.append("image", file);
 
       await axios.post(
-        "https://backend-admin-nu.vercel.app/api/v1/products/createProductController",
+        `${process.env.REACT_APP_URL}/createProductController`,
         formData,
         {
           headers: {
@@ -69,7 +69,7 @@ function ProductsAdd() {
     } catch (error) {
       Swal.fire({
         title: "Error!",
-        text: "An error occurred while adding the product.",
+        text: error.response.err.message,
         icon: "error",
         confirmButtonText: "Close",
       });

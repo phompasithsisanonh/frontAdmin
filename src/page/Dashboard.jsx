@@ -21,9 +21,9 @@ function Dashboard(prop) {
       try {
         setIsLoading(true);
         const [customerRes, productsRes, goodsRes] = await Promise.all([
-          axios.get("https://backend-admin-nu.vercel.app/api/v1/products/historyCustomer"),
-          axios.get("https://backend-admin-nu.vercel.app/api/v1/products/historyProducts"),
-          axios.get("https://backend-admin-nu.vercel.app/api/v1/products/getProducts"),
+          axios.get(`${process.env.REACT_APP_URL}/historyCustomer`),
+          axios.get(`${process.env.REACT_APP_URL}/historyProducts`),
+          axios.get(`${process.env.REACT_APP_URL}/getProducts`),
         ]);
         setHistoryCustomer(customerRes.data.latestHistory);
         setHistoryProducts(productsRes.data.latestHistoryProducts);
