@@ -12,7 +12,7 @@ function SignIn() {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        `${process.env.BACKEND_URL}/login`,
+        `${process.env.REACT_APP_URL}/login`,
         {
           email,
           password,
