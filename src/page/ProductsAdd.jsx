@@ -69,7 +69,7 @@ function ProductsAdd() {
     } catch (error) {
       Swal.fire({
         title: "Error!",
-        text: error.response.err.message,
+        text:'have error',
         icon: "error",
         confirmButtonText: "Close",
       });
