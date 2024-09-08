@@ -12,6 +12,7 @@ import Profile from "./components/Profile";
 import Login from "./auth/Login";
 import Income from "./components/Income";
 import Alladmin from "./components/Alladmin";
+import Swal from "sweetalert2";
 import StatusProducts from "./components/detailsProducts/StatusProducts";
 function App() {
   const navigate = useNavigate();
