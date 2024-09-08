@@ -142,7 +142,7 @@ function Alladmin() {
           <Stack spacing={4}>
             <Stack direction="row" spacing={4}>
               <Box>
-                <Text fontWeight="bold">ລະຫັດແອດມິນ</Text>
+                <Text fontWeight="bold">ລະຫັດ</Text>
                 <Select
                   value={passwordID}
                   onChange={(e) => setPasswordID(e.target.value)}
@@ -184,73 +184,75 @@ function Alladmin() {
               <Text fontSize="20px" p="4">
                 ຈຳນວນບໍລິຫານທັງໝົດ: <strong>{total}</strong>
               </Text>
-              <Table variant="striped" colorScheme="gray">
-                <Thead>
-                  <Tr>
-                    <Th textAlign="center">ລຳດັບ</Th>
-                    <Th textAlign="center">ຊື່ບໍລິຫານ</Th>
-                    <Th textAlign="center">ລະຫັດ ID</Th>
-                    <Th textAlign="center">ສະຖານະ</Th>
-                    <Th textAlign="center">ປິດ-user</Th>
-                    <Th textAlign="center">ແກ້ໄຂ</Th>
-                    <Th textAlign="center">ລົບອອກ</Th>
-                  </Tr>
-                </Thead>
-                {loading ? (
-                  <Tr>
-                    <Td colSpan={4}>
-                      <Text>Loading...</Text>
-                    </Td>
-                  </Tr>
-                ) : filteredList.length > 0 ? (
-                  <Tbody>
-                    {filteredList.map((row, index) => (
-                      <Tr key={index}>
-                        <Td textAlign="center">{index + 1}</Td>
-                        <Td textAlign="center">{row.firstName}</Td>
-                        <Td textAlign="center">{row.passwordID}</Td>
-                        <Td textAlign="center">
-                          <Box
-                            bg={getStatusBackgroundColor(row.status)}
-                            textAlign="center"
-                            p="2"
-                          >
-                            {row.status}
-                          </Box>
-                        </Td>
-                        <Td textAlign="center">
-                          <Button
-                            colorScheme="teal"
-                            onClick={() => handleBlock(row._id)}
-                          >
-                            Block
-                          </Button>
-                        </Td>
-                        <Td textAlign="center">
-                          <Button
-                            colorScheme="blue"
-                            onClick={() => console.log("Edit", row._id)}
-                          >
-                            ກໍ່ແກ້
-                          </Button>
-                        </Td>
-                        <Td textAlign="center">
-                          <Button
-                            colorScheme="red"
-                            onClick={() => Delete(row._id)}
-                          >
-                            ລົບ
-                          </Button>
-                        </Td>
-                      </Tr>
-                    ))}
-                  </Tbody>
-                ) : (
-                  <Box textAlign="center" p="4">
-                    <Text>ບໍ່ມີຂໍໍ້ມູນ</Text>
-                  </Box>
-                )}
-              </Table>
+              <TableContainer width="100%">
+                <Table variant="striped" colorScheme="gray">
+                  <Thead>
+                    <Tr>
+                      <Th textAlign="center">ລຳດັບ</Th>
+                      <Th textAlign="center">ຊື່ບໍລິຫານ</Th>
+                      <Th textAlign="center">ລະຫັດ ID</Th>
+                      <Th textAlign="center">ສະຖານະ</Th>
+                      <Th textAlign="center">ປິດ-user</Th>
+                      <Th textAlign="center">ແກ້ໄຂ</Th>
+                      <Th textAlign="center">ລົບອອກ</Th>
+                    </Tr>
+                  </Thead>
+                  {loading ? (
+                    <Tr>
+                      <Td colSpan={4}>
+                        <Text>Loading...</Text>
+                      </Td>
+                    </Tr>
+                  ) : filteredList.length > 0 ? (
+                    <Tbody>
+                      {filteredList.map((row, index) => (
+                        <Tr key={index}>
+                          <Td textAlign="center">{index + 1}</Td>
+                          <Td textAlign="center">{row.firstName}</Td>
+                          <Td textAlign="center">{row.passwordID}</Td>
+                          <Td textAlign="center">
+                            <Box
+                              bg={getStatusBackgroundColor(row.status)}
+                              textAlign="center"
+                              p="2"
+                            >
+                              {row.status}
+                            </Box>
+                          </Td>
+                          <Td textAlign="center">
+                            <Button
+                              colorScheme="teal"
+                              onClick={() => handleBlock(row._id)}
+                            >
+                              Block
+                            </Button>
+                          </Td>
+                          <Td textAlign="center">
+                            <Button
+                              colorScheme="blue"
+                              onClick={() => console.log("Edit", row._id)}
+                            >
+                              ກໍ່ແກ້
+                            </Button>
+                          </Td>
+                          <Td textAlign="center">
+                            <Button
+                              colorScheme="red"
+                              onClick={() => Delete(row._id)}
+                            >
+                              ລົບ
+                            </Button>
+                          </Td>
+                        </Tr>
+                      ))}
+                    </Tbody>
+                  ) : (
+                    <Box textAlign="center" p="4">
+                      <Text>ບໍ່ມີຂໍໍ້ມູນ</Text>
+                    </Box>
+                  )}
+                </Table>
+              </TableContainer>
             </TableContainer>
 
             <Flex mt="4" align="center" justify="center">
