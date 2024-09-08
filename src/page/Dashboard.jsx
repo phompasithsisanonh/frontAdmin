@@ -1,4 +1,18 @@
-import { Box, Heading, Input, Stack, Text, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Input,
+  Stack,
+  Text,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Flex,
+  Grid,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { BsBasket } from "react-icons/bs";
@@ -38,8 +52,8 @@ function Dashboard(prop) {
   }, []);
 
   return (
-    <Box display="flex">
-      <Box>
+    <Flex direction={{ base: "column", md: "row" }} p={4}>
+      <Box width={{ base: "100%", md: "20%" }} mb={{ base: 4, md: 0 }}>
         <Bar />
       </Box>
       <Box flex="1" p={4}>
@@ -51,40 +65,79 @@ function Dashboard(prop) {
           </Box>
         </Box>
 
-        <Stack direction="row" spacing={8} mb={8}>
-          <Box textAlign="center" p={4} borderWidth={1} borderRadius="md" flex="1" borderColor="gray.200" bg="white">
+        <Grid templateColumns={{ base: "1fr", md: "repeat(4, 1fr)" }} gap={4} mb={4}>
+          <Box
+            textAlign="center"
+            p={4}
+            borderWidth={1}
+            borderRadius="md"
+            borderColor="gray.200"
+            bg="white"
+            boxShadow="md"
+          >
             <Heading mb={2}>{listGoods}</Heading>
             <Text>Stock</Text>
             <Box mt={2} fontSize="40px">
               <FaEye />
             </Box>
           </Box>
-          <Box textAlign="center" p={4} borderWidth={1} borderRadius="md" flex="1" borderColor="gray.200" bg="white">
+          <Box
+            textAlign="center"
+            p={4}
+            borderWidth={1}
+            borderRadius="md"
+            borderColor="gray.200"
+            bg="white"
+            boxShadow="md"
+          >
             <Heading mb={2}>{TotalOrder}</Heading>
             <Text>Sales</Text>
             <Box mt={2} fontSize="40px">
               <BsBasket />
             </Box>
           </Box>
-          <Box textAlign="center" p={4} borderWidth={1} borderRadius="md" flex="1" borderColor="gray.200" bg="white">
+          <Box
+            textAlign="center"
+            p={4}
+            borderWidth={1}
+            borderRadius="md"
+            borderColor="gray.200"
+            bg="white"
+            boxShadow="md"
+          >
             <Heading mb={2}>{totalCustomer}</Heading>
             <Text>Customer</Text>
             <Box mt={2} fontSize="40px">
               <PiChatsTeardropThin />
             </Box>
           </Box>
-          <Box textAlign="center" p={4} borderWidth={1} borderRadius="md" flex="1" borderColor="gray.200" bg="white">
+          <Box
+            textAlign="center"
+            p={4}
+            borderWidth={1}
+            borderRadius="md"
+            borderColor="gray.200"
+            bg="white"
+            boxShadow="md"
+          >
             <Heading mb={2}>1,500</Heading>
             <Text>Earning</Text>
             <Box mt={2} fontSize="40px">
               <GrMoney />
             </Box>
           </Box>
-        </Stack>
-        <Box display="flex" justifyContent="space-between">
-          <Box flex="1" p={4}>
+        </Grid>
+        <Stack spacing={4} p={4} borderWidth={1} borderRadius="md" boxShadow="md">
+          <Box>
             <Heading mb={4}>Product History</Heading>
-            <Box borderWidth={1} borderRadius="md" borderColor="gray.200" bg="white" p={4}>
+            <Box
+              borderWidth={1}
+              borderRadius="md"
+              borderColor="gray.200"
+              bg="white"
+              p={4}
+              overflowX="auto"
+            >
               <Table variant="simple">
                 <Thead>
                   <Tr>
@@ -121,9 +174,16 @@ function Dashboard(prop) {
               </Table>
             </Box>
           </Box>
-          <Box flex="1" p={4}>
+          <Box>
             <Heading mb={4}>Customer History</Heading>
-            <Box borderWidth={1} borderRadius="md" borderColor="gray.200" bg="white" p={4}>
+            <Box
+              borderWidth={1}
+              borderRadius="md"
+              borderColor="gray.200"
+              bg="white"
+              p={4}
+              overflowX="auto"
+            >
               <Table variant="simple">
                 <Thead>
                   <Tr>
@@ -160,9 +220,9 @@ function Dashboard(prop) {
               </Table>
             </Box>
           </Box>
-        </Box>
+        </Stack>
       </Box>
-    </Box>
+    </Flex>
   );
 }
 

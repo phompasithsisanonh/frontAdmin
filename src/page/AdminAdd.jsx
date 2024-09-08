@@ -55,7 +55,7 @@ function AdminAdd() {
   };
 
   return (
-    <Flex>
+    <Flex direction={{ base: "column", md: "row" }} p={4}>
       <Bar />
       <Box flex="1" p={6}>
         <Heading

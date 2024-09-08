@@ -149,7 +149,7 @@ function Order() {
   }, [productsName]);
 
   return (
-    <Flex direction="row" flex="1">
+    <Flex direction={{ base: "column", md: "row" }} p={4}>
       <Bar />
       <Box flex="1" p={6}>
         <Heading

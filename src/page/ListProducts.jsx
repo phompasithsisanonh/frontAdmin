@@ -16,6 +16,7 @@ import {
   Button,
   useToast,
   Select,
+  Flex,
   Spinner,
 } from "@chakra-ui/react";
 import { FaPrint, FaClipboardList } from "react-icons/fa";
@@ -206,11 +207,11 @@ function ListProducts() {
   ));
 
   return (
-    <Box display="flex">
+    <Flex direction={{ base: "column", md: "row" }} p={4}>
       <Bar />
       <Box flex="1" p="4">
         <Heading fontSize="2xl" mb="4">
-          <FaClipboardList /> Product List
+          <FaClipboardList /> ລາຍການສິນຄ້າ
         </Heading>
         <Box mb="4">
           <Stack spacing={4}>
@@ -359,7 +360,7 @@ function ListProducts() {
           </Button>
         </Box>
       </Box>
-    </Box>
+    </Flex>
   );
 }
 

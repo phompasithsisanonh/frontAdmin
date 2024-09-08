@@ -73,9 +73,7 @@ function Alladmin() {
           isClosable: true,
         });
       } else {
-        await axios.delete(
-          `${process.env.REACT_APP_URL}/delete/${id}`
-        );
+        await axios.delete(`${process.env.REACT_APP_URL}/delete/${id}`);
         toast({
           title: "Delete Successful",
           description: "User deleted successfully",
@@ -126,7 +124,7 @@ function Alladmin() {
   }, [page, passwordID]);
 
   return (
-    <Box display="flex">
+    <Flex direction={{ base: "column", md: "row" }} p={4}>
       <Bar />
       <Box flex="1" p="4">
         <Heading
@@ -198,7 +196,13 @@ function Alladmin() {
                     <Th textAlign="center">ລົບອອກ</Th>
                   </Tr>
                 </Thead>
-                {filteredList.length > 0 ? (
+                {loading ? (
+                  <Tr>
+                    <Td colSpan={4}>
+                      <Text>Loading...</Text>
+                    </Td>
+                  </Tr>
+                ) : filteredList.length > 0 ? (
                   <Tbody>
                     {filteredList.map((row, index) => (
                       <Tr key={index}>
@@ -244,7 +248,7 @@ function Alladmin() {
                   </Tbody>
                 ) : (
                   <Box textAlign="center" p="4">
-                    <Text>ບໍ່ມີຂໍໍມູນ</Text>
+                    <Text>ບໍ່ມີຂໍໍ້ມູນ</Text>
                   </Box>
                 )}
               </Table>
@@ -255,7 +259,7 @@ function Alladmin() {
                 icon={<ChevronLeftIcon />}
                 onClick={() => handlePageChange(-1)}
                 isDisabled={page === 1}
-                aria-label="Previous Page"
+                aria-label="ກ່ອນໜ້າ"
               />
               <Text mx="4">
                 Page {page} of {Math.ceil(total / limit)}
@@ -264,13 +268,13 @@ function Alladmin() {
                 icon={<ChevronRightIcon />}
                 onClick={() => handlePageChange(1)}
                 isDisabled={page === Math.ceil(total / limit)}
-                aria-label="Next Page"
+                aria-label="ຖັດໄປ"
               />
             </Flex>
           </Stack>
         </Box>
       </Box>
-    </Box>
+    </Flex>
   );
 }
 

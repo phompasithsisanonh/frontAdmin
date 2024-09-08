@@ -66,7 +66,7 @@ function Profile() {
   };
 
   return (
-    <Flex minHeight="100vh">
+    <Flex direction={{ base: "column", md: "row" }} p={4} minHeight="100vh">
       <Bar />
       <Box flex="1" p={5} bg="gray.100">
         <Heading

@@ -13,10 +13,6 @@ import Login from "./auth/Login";
 import Income from "./components/Income";
 import Alladmin from "./components/Alladmin";
 import StatusProducts from "./components/detailsProducts/StatusProducts";
-import OrderManagement from "./OrderManagement";
-import Swal from "sweetalert2";
-import ParentComponent from "./redux/ParentComponent";
-
 function App() {
   const navigate = useNavigate();
   const [timeoutId, setTimeoutId] = useState(null);
@@ -34,31 +30,31 @@ function App() {
       });
     }
   }, [token, navigate]);
-   useEffect(() => {
-     const handleUserActivity = () => {
-       if (timeoutId) {
-         clearTimeout(timeoutId);
-       }
-       const id = setTimeout(() => {
-         navigate('/login');
-         localStorage.removeItem("token");
-       }, 3 * 24 * 60 * 60 * 1000);  
-// 3d
-// 
-       setTimeoutId(id);
-     };
+  useEffect(() => {
+    const handleUserActivity = () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      const id = setTimeout(() => {
+        navigate("/login");
+        localStorage.removeItem("token");
+      }, 3 * 24 * 60 * 60 * 1000);
+      // 3d
+      //
+      setTimeoutId(id);
+    };
 
-     window.addEventListener('mousemove', handleUserActivity);
-     window.addEventListener('keydown', handleUserActivity);
+    window.addEventListener("mousemove", handleUserActivity);
+    window.addEventListener("keydown", handleUserActivity);
 
-     return () => {
-       window.removeEventListener('mousemove', handleUserActivity);
-       window.removeEventListener('keydown', handleUserActivity);
-       if (timeoutId) {
-         clearTimeout(timeoutId);
-       }
-     };
-   }, [timeoutId, navigate]);
+    return () => {
+      window.removeEventListener("mousemove", handleUserActivity);
+      window.removeEventListener("keydown", handleUserActivity);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [timeoutId, navigate]);
 
   return (
     <Routes>
@@ -67,15 +63,13 @@ function App() {
       <Route path="/order" element={<Order />} />
       <Route path="/listProducts" element={<ListProducts />} />
       <Route path="/addProducts" element={<ProductsAdd />} />
-      <Route path="/adminAdd" element={<AdminAdd />} />
+      <Route path="/adminAdd" element={<AdminAdd />} />`
       <Route path="/customerAdd" element={<CustomerAdd />} />
       <Route path="/customer" element={<Customer />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/income" element={<Income />} />
       <Route path="/admin" element={<Alladmin />} />
       <Route path="/status_Products" element={<StatusProducts />} />
-      <Route path="/test" element={<OrderManagement />} />
-      {/* <Route path="/testApi" element={<ParentComponent />} /> */}
     </Routes>
   );
 }

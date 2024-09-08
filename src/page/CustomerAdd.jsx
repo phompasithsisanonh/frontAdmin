@@ -6,7 +6,6 @@ import {
   Stack,
   Select,
   Button,
-  useToast,
   Flex,
   FormControl,
   FormLabel,
@@ -23,7 +22,6 @@ function CustomerAdd() {
   const [address, setAddress] = useState("");
   const [status, setStatus] = useState("customer");
   const decoded = localStorage.getItem("token");
-  const toast = useToast();
 
   const handleCustomer = async () => {
     try {
@@ -67,7 +65,7 @@ function CustomerAdd() {
   };
 
   return (
-    <Flex>
+    <Flex direction={{ base: "column", md: "row" }} p={4}>
       <Bar />
       <Box flex="1" p={6}>
         <Heading
@@ -82,7 +80,13 @@ function CustomerAdd() {
           <RiCustomerService2Fill size="24px" /> ເພີ່ມລູກຄ້າ
         </Heading>
 
-        <Stack spacing={4} p={4} borderWidth={1} borderRadius="md" boxShadow="md">
+        <Stack
+          spacing={4}
+          p={4}
+          borderWidth={1}
+          borderRadius="md"
+          boxShadow="md"
+        >
           <Stack spacing={4}>
             <FormControl>
               <FormLabel>ສະຖານະ</FormLabel>

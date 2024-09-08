@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Heading, Input, Stack, Button, Select, FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/react";
+import { Box, Heading, Input, Stack, Button,  useToast, Select, FormControl, FormLabel, Flex } from "@chakra-ui/react";
 import Bar from "../LlistBar/Bar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -8,7 +8,7 @@ import { AiOutlineProduct } from "react-icons/ai";
 
 function ProductsAdd() {
   const navigate = useNavigate();
-
+  const toast = useToast();
   const [status, setStatus] = useState("admin");
   const [productsName, setProductsName] = useState("");
   const [nameAdmin, setNameAdmin] = useState("");
@@ -19,10 +19,10 @@ function ProductsAdd() {
   const [size, setSize] = useState("");
   const [codeProducts, setCodeProducts] = useState("");
   const decoded = localStorage.getItem("token");
-  const [file, setFile] = useState(null);
   const [uploadError, setUploadError] = useState("");
   const [uploading, setUploading] = useState(false);
-
+  
+  // const [file, setFile] = useState(null);
   // const onFileChange = (e) => {
   //   setFile(e.target.files[0]);
   // };
@@ -31,6 +31,13 @@ function ProductsAdd() {
     try {
       if (!productsName || !nameAdmin || !date || !price || !category || !quantity || !size || !codeProducts ) {
         setUploadError("Please fill out all required fields and select a file.");
+        toast({
+          title: "Error",
+          description: uploadError,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
         return;
       }
       setUploading(true);
@@ -69,7 +76,7 @@ function ProductsAdd() {
     } catch (error) {
       Swal.fire({
         title: "Error!",
-        text:'have error',
+        text:'server error',
         icon: "error",
         confirmButtonText: "Close",
       });
@@ -80,15 +87,26 @@ function ProductsAdd() {
   };
 
   return (
-    <Box display={"flex"}>
-      <Bar />
+    <Flex >
+    <Box width={{ base: "100%", md: "20%" }} mb={{ base: 4, md: 0 }}>
+        <Bar />
+      </Box>
       <Box flex="1" p={5}>
-        <Heading mb={6}>
-          <AiOutlineProduct /> Add Product
+      <Heading
+          mb={6}
+          fontSize="2xl"
+          textAlign="center"
+          color="teal.500"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <AiOutlineProduct  size="24px" /> ເພີ່ມລູກຄ້າ
         </Heading>
+    
 
-        <Stack spacing={4}>
-          <Stack direction={"row"} spacing={4}>
+        <Stack  spacing={4} p={4} borderWidth={1} borderRadius="md" boxShadow="md">
+          <Stack  spacing={4}>
             <FormControl isRequired>
               <FormLabel>Product Category</FormLabel>
               <Select
@@ -130,7 +148,7 @@ function ProductsAdd() {
               </Select>
             </FormControl>
           </Stack>
-          <Stack direction={"row"} spacing={4}>
+          <Stack spacing={4} direction={{ base: "column", md: "row" }}>
             <FormControl isRequired>
               <FormLabel>Product Code</FormLabel>
               <Input
@@ -165,7 +183,7 @@ function ProductsAdd() {
               />
             </FormControl>
           </Stack>
-          <Stack direction={"row"} spacing={4}>
+          <Stack spacing={4} direction={{ base: "column", md: "row" }}>
             <FormControl isRequired>
               <FormLabel>Date Added</FormLabel>
               <Input
@@ -193,7 +211,7 @@ function ProductsAdd() {
               />
             </FormControl>
           </Stack>
-          <Stack direction={"row"} spacing={4} pt={10} justifyContent={"flex-end"}>
+          <Stack spacing={4} direction={{ base: "column", md: "row" }}>
             <Button onClick={() => navigate("/")}>
               Cancel
             </Button>
@@ -202,12 +220,12 @@ function ProductsAdd() {
               colorScheme="teal" 
               isLoading={uploading}
             >
-              Add Product
+              ເພີ່ມສິນຄ້າ
             </Button>
           </Stack>
         </Stack>
       </Box>
-    </Box>
+    </Flex>
   );
 }
 

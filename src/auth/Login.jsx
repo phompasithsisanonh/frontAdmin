@@ -33,7 +33,7 @@ function SignIn() {
     } catch (error) {
       Swal.fire({
         title: "ບໍ່ຖືກຕ້ອງ ກະລຸນາລ໋ອກອິນໃໝ່",
-        text: "ລະຫັດຜໍ່ານ ຫຼື ອິວເມວບໍ່ຖືກຕ້ອງ",
+        text: "ລະຫັດຜ່ານ ຫຼື ອິວເມວບໍ່ຖືກຕ້ອງ",
         icon: "error",
         confirmButtonText: "ປິດ",
       });

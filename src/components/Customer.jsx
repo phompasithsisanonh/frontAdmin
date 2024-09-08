@@ -13,6 +13,7 @@ import {
   Tr,
   Th,
   Td,
+  Flex,
   TableContainer,
   useToast,
 } from "@chakra-ui/react";
@@ -103,7 +104,7 @@ function Customer() {
   }, [page, customerID]);
 
   return (
-    <Box display="flex" flexDirection="row" flex="1">
+    <Flex direction={{ base: "column", md: "row" }} p={4}>
       <Bar />
       <Box flex="1" p="4">
         <Heading mb="8" textAlign="center" bg="yellow.400" p="4">
@@ -251,7 +252,7 @@ function Customer() {
           </Box> */}
         </Box>
       </Box>
-    </Box>
+    </Flex>
   );
 }
 
