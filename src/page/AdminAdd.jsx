@@ -28,6 +28,14 @@ function AdminAdd() {
 
   const handleAdmin = async () => {
     try {
+      if(!email ||  !status || !passwordID ||  !firstName || !password || !tel){
+        Swal.fire({
+          title: "Error!",
+          text: "ກະລຸນາບ່ອນຂໍ້ມູນ",
+          icon: "error",
+          confirmButtonText: "ປິດ",
+        });
+      }
       await axios.post(`${process.env.REACT_APP_URL}/register`, {
         email,
         password,
@@ -46,7 +54,7 @@ function AdminAdd() {
     } catch (error) {
       Swal.fire({
         title: "Error!",
-        text: "ເກີດຂໍ້ຜິດຜາດ",
+        text: "ກະລຸນາປ້ອນຂໍ້ມູນ",
         icon: "error",
         confirmButtonText: "ປິດ",
       });

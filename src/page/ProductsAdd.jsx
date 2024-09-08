@@ -76,7 +76,7 @@ function ProductsAdd() {
     } catch (error) {
       Swal.fire({
         title: "Error!",
-        text:'server error',
+        text:'ກະລຸນາປ້ອນຂໍ້ມູນ',
         icon: "error",
         confirmButtonText: "Close",
       });
@@ -87,7 +87,7 @@ function ProductsAdd() {
   };
 
   return (
-    <Flex >
+    <Flex direction={{ base: "column", md: "row" }} p={4}>
     <Box width={{ base: "100%", md: "20%" }} mb={{ base: 4, md: 0 }}>
         <Bar />
       </Box>
@@ -101,7 +101,7 @@ function ProductsAdd() {
           alignItems="center"
           justifyContent="center"
         >
-          <AiOutlineProduct  size="24px" /> ເພີ່ມລູກຄ້າ
+          <AiOutlineProduct  size="24px" /> ເພີ່ມສິນຄ້າ
         </Heading>
     
 

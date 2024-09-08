@@ -213,7 +213,6 @@ function Alladmin() {
                           <Box
                             bg={getStatusBackgroundColor(row.status)}
                             textAlign="center"
-                            borderRadius="md"
                             p="2"
                           >
                             {row.status}

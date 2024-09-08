@@ -16,8 +16,8 @@ import {
   Button,
   useToast,
   Select,
-  Flex,
   Spinner,
+  Flex,
 } from "@chakra-ui/react";
 import { FaPrint, FaClipboardList } from "react-icons/fa";
 import axios from "axios";
@@ -79,9 +79,7 @@ function ListProducts() {
 
   const fetchAlerts = useCallback(async () => {
     try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_URL}/alerts`
-      );
+      const res = await axios.get(`${process.env.REACT_APP_URL}/alerts`);
       setAlerts(res.data);
     } catch (error) {
       console.error("Error fetching alerts:", error);
@@ -131,7 +129,7 @@ function ListProducts() {
 
   const ComponentTable = React.forwardRef((props, ref) => (
     <TableContainer width="100%" ref={ref}>
-      <Table variant="simple" bg="gray.800" color="white" borderRadius="md">
+      <Table variant="simple" bg="gray.800" color="white">
         <TableCaption>
           Total Products: <strong>{total}</strong>
         </TableCaption>
@@ -273,71 +271,82 @@ function ListProducts() {
                 content={() => componentRef.current}
               />
             </Box>
-            <Stack direction="row" spacing={10}>
-              <ComponentTable ref={componentRef} />
+            <Stack direction={{ base: "column", md: "row" }} p={4}>
+              <Box pl="8">
+                <Heading fontSize="2xl" mb="4">
+                  ລາຍການສິນຄ້າ
+                </Heading>
+                <ComponentTable ref={componentRef} />
+              </Box>
+
               <Box pl="8">
                 <Heading size="md">Low Stock Products</Heading>
-                <Table
-                  variant="simple"
-                  bg="gray.800"
-                  color="white"
-                  borderRadius="md"
-                >
-                  <Thead>
-                    <Tr>
-                      {[
-                        "#",
-                        "Category",
-                        "Product Name",
-                        "Image",
-                        "Quantity",
-                        "Product Code",
-                      ].map((header) => (
-                        <Th key={header} textAlign="center">
-                          {header}
-                        </Th>
-                      ))}
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {loading ? (
-                          <Tr>
+                <TableContainer width="100%">
+                  <Table
+                    variant="simple"
+                    bg="gray.800"
+                    color="white"
+                    borderRadius="md"
+                    width="100%"
+                  >
+                    <Thead>
+                      <Tr>
+                        {[
+                          "#",
+                          "Category",
+                          "Product Name",
+                          "Image",
+                          "Quantity",
+                          "Product Code",
+                        ].map((header) => (
+                          <Th key={header} textAlign="center">
+                            {header}
+                          </Th>
+                        ))}
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {loading ? (
+                        <Tr>
                           <Td colSpan={15} textAlign="center">
                             <Spinner size="lg" color="teal.500" />
                           </Td>
                         </Tr>
-                    ) : alerts.length > 0 ? (
-                      alerts.map((alert, index) => (
-                        <Tr key={alert._id}>
-                          <Td textAlign="center">{index + 1}</Td>
-                          <Td textAlign="center">{alert.category || "N/A"}</Td>
-                          <Td textAlign="center">{alert.productsName}</Td>
-                          <Td textAlign="center">
-                            <img
-                              src={
-                                alert.image
-                                  ? `http://localhost:8000${alert.image}`
-                                  : defaultImage
-                              }
-                              alt={alert.productsName || "Alert Image"}
-                              style={{ width: "70px", height: "70px" }}
-                            />
+                      ) : alerts.length > 0 ? (
+                        alerts.map((alert, index) => (
+                          <Tr key={alert._id}>
+                            <Td textAlign="center">{index + 1}</Td>
+                            <Td textAlign="center">
+                              {alert.category || "N/A"}
+                            </Td>
+                            <Td textAlign="center">{alert.productsName}</Td>
+                            <Td textAlign="center">
+                              <img
+                                src={
+                                  alert.image
+                                    ? `http://localhost:8000${alert.image}`
+                                    : defaultImage
+                                }
+                                alt={alert.productsName || "Alert Image"}
+                                style={{ width: "70px", height: "70px" }}
+                              />
+                            </Td>
+                            <Td textAlign="center">{alert.quantity}</Td>
+                            <Td textAlign="center">{alert.codeProducts}</Td>
+                          </Tr>
+                        ))
+                      ) : (
+                        <Tr>
+                          <Td colSpan={6} textAlign="center">
+                            <Text fontSize="lg" color="red">
+                              No Data Available
+                            </Text>
                           </Td>
-                          <Td textAlign="center">{alert.quantity}</Td>
-                          <Td textAlign="center">{alert.codeProducts}</Td>
                         </Tr>
-                      ))
-                    ) : (
-                      <Tr>
-                        <Td colSpan={6} textAlign="center">
-                          <Text fontSize="lg" color="red">
-                            No Data Available
-                          </Text>
-                        </Td>
-                      </Tr>
-                    )}
-                  </Tbody>
-                </Table>
+                      )}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
               </Box>
             </Stack>
           </Stack>

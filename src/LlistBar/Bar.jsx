@@ -121,7 +121,15 @@ const DesktopMenu = ({
   </Box>
 );
 
-const MobileMenu = ({ menuItems, handleClick, isOpen, onClose }) => (
+const MobileMenu = ({
+  menuItems,
+  handleClick,
+  isOpen,
+  onClose,
+  activeMenuItem ,
+  toggleDropdown,
+  showDropdown,
+}) => (
   <Drawer
     fontFamily={"Noto Sans Lao, sans-serif"}
     isOpen={isOpen}
@@ -133,11 +141,27 @@ const MobileMenu = ({ menuItems, handleClick, isOpen, onClose }) => (
       <DrawerCloseButton />
       <DrawerHeader>Admin</DrawerHeader>
       <DrawerBody>
-        <VStack align="start" spacing={4}>
-          {menuItems.map((item) => (
-            <MenuButton key={item.id} item={item} onClick={handleClick} />
-          ))}
-        </VStack>
+      <VStack align="start" spacing={4}>
+      {menuItems.map((item) => (
+        <React.Fragment key={item.id}>
+          <MenuButton
+            item={item}
+            isActive={activeMenuItem === item.id}
+            onClick={() => {
+              handleClick(item.id);
+              if (item.subItems) {
+                toggleDropdown(item.id); // Toggle dropdown for items with subItems
+              }
+            }}
+          />
+          {item.subItems && (
+            <Collapse in={showDropdown === item.id}>
+              <SubMenu subItems={item.subItems} handleClick={handleClick} />
+            </Collapse>
+          )}
+        </React.Fragment>
+      ))}
+    </VStack>
       </DrawerBody>
     </DrawerContent>
   </Drawer>
@@ -205,7 +229,7 @@ const Bar = React.memo(() => {
     <>
       {isMobile ? (
         <>
-          <HStack  p={4} justifyContent="space-between">
+          <HStack p={4} justifyContent="space-between">
             <IconButton
               aria-label="Open Menu"
               icon={<HamburgerIcon />}
@@ -217,6 +241,8 @@ const Bar = React.memo(() => {
             handleClick={handleClick}
             isOpen={isOpen}
             onClose={onClose}
+            activeMenuItem={activeMenuItem}
+            toggleDropdown={toggleDropdown}
           />
         </>
       ) : (

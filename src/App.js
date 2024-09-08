@@ -19,18 +19,18 @@ function App() {
   const [timeoutId, setTimeoutId] = useState(null);
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    if (!token) {
-      Swal.fire({
-        title: "Fail",
-        text: "You need to log in to access this page.",
-        icon: "error",
-        confirmButtonText: "Close",
-      }).then(() => {
-        navigate("/login");
-      });
-    }
-  }, [token, navigate]);
+  // useEffect(() => {
+  //   if (!token) {
+  //     Swal.fire({
+  //       title: "Fail",
+  //       text: "You need to log in to access this page.",
+  //       icon: "error",
+  //       confirmButtonText: "Close",
+  //     }).then(() => {
+  //       navigate("/login");
+  //     });
+  //   }
+  // }, [token, navigate]);
   useEffect(() => {
     const handleUserActivity = () => {
       if (timeoutId) {

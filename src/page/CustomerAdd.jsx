@@ -56,7 +56,7 @@ function CustomerAdd() {
     } catch (error) {
       Swal.fire({
         title: "Error!",
-        text: "ເກີດຂໍ້ຜິດຜາດ",
+        text: "ກະລຸນາປ້ອນຂໍ້ມູນ",
         icon: "error",
         confirmButtonText: "ປິດ",
       });
