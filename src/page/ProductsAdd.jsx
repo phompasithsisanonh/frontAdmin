@@ -128,8 +128,8 @@ function ProductsAdd() {
 
   // Update countdown timer
   useEffect(() => {
-    const interval = setInterval(() => {
-      axios
+    const interval = setInterval( async() => {
+      await axios
         .delete(`${process.env.REACT_APP_URL}/deleteDiscount`)
         .then(() => {
           handleAddProducts();
@@ -137,7 +137,7 @@ function ProductsAdd() {
         .catch((error) => console.log("error removing expired discount"));
     });
     return () => clearInterval(interval);
-  }, []);
+  }, [expirationDate]);
 
   return (
     <Flex direction={{ base: "column", md: "row" }} p={4}>
