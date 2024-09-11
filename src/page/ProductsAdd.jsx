@@ -21,7 +21,9 @@ function ProductsAdd() {
   const decoded = localStorage.getItem("token");
   const [uploadError, setUploadError] = useState("");
   const [uploading, setUploading] = useState(false);
-  
+  const [discount, setDiscount] = useState(0);
+  const [expiryDate, setExpiryDate] = useState('');
+  const [lowPrice, setLowPrice] = useState('');
   // const [file, setFile] = useState(null);
   // const onFileChange = (e) => {
   //   setFile(e.target.files[0]);
@@ -42,7 +44,7 @@ function ProductsAdd() {
       }
       setUploading(true);
       setUploadError("");
-
+      const expiry = expiryDate ? new Date(expiryDate) : null;
       const formData = new FormData();
       formData.append("productsName", productsName);
       formData.append("nameAdmin", nameAdmin);
@@ -53,8 +55,10 @@ function ProductsAdd() {
       formData.append("quantity", quantity);
       formData.append("size", size);
       formData.append("codeProducts", codeProducts);
+      formData.append("discountExpiry", expiry);
+      formData.append("discount",  discount);
+      formData.append("lowPrice",  lowPrice);
       // formData.append("image", file);
-
       await axios.post(
         `${process.env.REACT_APP_URL}/createProductController`,
         formData,
@@ -208,6 +212,38 @@ function ProductsAdd() {
                 onChange={(e) => setQuantity(e.target.value)}
                 type="number"
                 placeholder="Product quantity"
+              />
+            </FormControl>
+          </Stack>
+          <Stack spacing={4} direction={{ base: "column", md: "row" }}>
+            <FormControl isRequired>
+              <FormLabel>discount</FormLabel>
+              <Input
+              type="number"
+              value={discount}
+              onChange={(e) => setDiscount(parseFloat(e.target.value))}
+              placeholder="Discount"
+              required
+              />
+            </FormControl>
+                 <FormControl isRequired>
+              <FormLabel>expiryDate</FormLabel>
+              <Input
+                 type="date"
+                 value={expiryDate}
+                 onChange={(e) => setExpiryDate(e.target.value)}
+                 placeholder="Discount Expiry Date"
+                 required
+              />
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>lowPrice</FormLabel>
+              <Input
+                 type="Number"
+                 value={lowPrice}
+                 onChange={(e) => setLowPrice(e.target.value)}
+                 placeholder="lowPrice"
+                 required
               />
             </FormControl>
           </Stack>

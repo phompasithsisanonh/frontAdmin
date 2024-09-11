@@ -34,6 +34,7 @@ function Order() {
   const [pay, setPay] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
+
   const [isLoading, setIsLoading] = useState(false);
   const [getData, setGetData] = useState([]);
   const [getCustomer, setGetCustomer] = useState([]);
