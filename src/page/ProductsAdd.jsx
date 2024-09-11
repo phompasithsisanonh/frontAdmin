@@ -21,7 +21,11 @@ import {
   intervalToDuration,
   formatDuration,
 } from "date-fns";
-
+// const [file, setFile] = useState(null);
+// const onFileChange = (e) => {
+//   setFile(e.target.files[0]);
+// };
+// formData.append("image", file);
 function ProductsAdd() {
   const navigate = useNavigate();
   const toast = useToast();
@@ -38,18 +42,18 @@ function ProductsAdd() {
   const [uploadError, setUploadError] = useState("");
   const [uploading, setUploading] = useState(false);
   const [discount, setDiscount] = useState(0);
-  const [expiryDate, setExpiryDate] = useState("");
+  const [expirationDate, setExpirationDate] = useState("");
   const [lowPrice, setLowPrice] = useState("");
-  const [timeLeft, setTimeLeft] = useState(0);
-  // const [file, setFile] = useState(null);
-  // const onFileChange = (e) => {
-  //   setFile(e.target.files[0]);
-  // };
-  const duration = intervalToDuration({ start: 0, end: timeLeft * 1000 });
-  const formattedDuration = formatDuration(duration, {
-    format: ["days", "hours", "minutes", "seconds"],
-  });
 
+  // Handle adding product
+  const calculateTimeRemaining = (expirationDate) => {
+    const now = new Date();
+    const timeRemaining = new Date(expirationDate) - now;
+    if (timeRemaining <= 0) return "Expired";
+    const minutes = Math.floor(timeRemaining / (100 * 60));
+    const seconds = Math.floor(((timeRemaining / 100) * 60) / 1000);
+    return `${minutes} : ${seconds}`;
+  };
   const handleAddProducts = async () => {
     try {
       if (
@@ -62,9 +66,7 @@ function ProductsAdd() {
         !size ||
         !codeProducts
       ) {
-        setUploadError(
-          "Please fill out all required fields and select a file."
-        );
+        setUploadError("Please fill out all required fields.");
         toast({
           title: "Error",
           description: uploadError,
@@ -76,7 +78,8 @@ function ProductsAdd() {
       }
       setUploading(true);
       setUploadError("");
-      const expiry = expiryDate ? new Date(expiryDate) : null;
+      const expiry = expirationDate;
+      calculateTimeRemaining(expiry);
       const formData = new FormData();
       formData.append("productsName", productsName);
       formData.append("nameAdmin", nameAdmin);
@@ -108,11 +111,12 @@ function ProductsAdd() {
         icon: "success",
         confirmButtonText: "Close",
       });
+
       navigate("/");
     } catch (error) {
       Swal.fire({
         title: "Error!",
-        text: "ກະລຸນາປ້ອນຂໍ້ມູນ",
+        text: "An error occurred while adding the product.",
         icon: "error",
         confirmButtonText: "Close",
       });
@@ -121,35 +125,26 @@ function ProductsAdd() {
       setUploading(false);
     }
   };
+
+  // Update countdown timer
   useEffect(() => {
-    const calculateTimeLeft = () => {
-      const now = new Date();
-      const expiry = new Date(expiryDate);
-      const secondsLeft = differenceInSeconds(expiry, now);
-      setTimeLeft(secondsLeft);
-    };
-
-    calculateTimeLeft(); // Initial calculation
-
     const interval = setInterval(() => {
-      calculateTimeLeft();
-    }, 1000);
-
+      axios
+        .delete(`${process.env.REACT_APP_URL}/deleteDiscount`)
+        .then(() => {
+          handleAddProducts();
+        })
+        .catch((error) => console.log("error removing expired discount"));
+    });
     return () => clearInterval(interval);
-  }, [expiryDate]);
+  }, []);
+
   return (
     <Flex direction={{ base: "column", md: "row" }} p={4}>
       <Box width={{ base: "100%", md: "20%" }} mb={{ base: 4, md: 0 }}>
         <Bar />
       </Box>
       <Box flex="1" p={5}>
-        <div>
-          {timeLeft > 0 ? (
-            <p>Time left: {formattedDuration}</p>
-          ) : (
-            <p>Promotion has ended</p>
-          )}
-        </div>
         <Heading
           mb={6}
           fontSize="2xl"
@@ -289,8 +284,8 @@ function ProductsAdd() {
               <FormLabel>expiryDate</FormLabel>
               <Input
                 type="date"
-                value={expiryDate}
-                onChange={(e) => setExpiryDate(e.target.value)}
+                value={expirationDate}
+                onChange={(e) => setExpirationDate(e.target.value)}
                 placeholder="Discount Expiry Date"
                 required
               />
