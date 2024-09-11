@@ -1,10 +1,26 @@
-import React, { useState } from "react";
-import { Box, Heading, Input, Stack, Button,  useToast, Select, FormControl, FormLabel, Flex } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Heading,
+  Input,
+  Stack,
+  Button,
+  useToast,
+  Select,
+  FormControl,
+  FormLabel,
+  Flex,
+} from "@chakra-ui/react";
 import Bar from "../LlistBar/Bar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { AiOutlineProduct } from "react-icons/ai";
+import {
+  differenceInSeconds,
+  intervalToDuration,
+  formatDuration,
+} from "date-fns";
 
 function ProductsAdd() {
   const navigate = useNavigate();
@@ -22,17 +38,33 @@ function ProductsAdd() {
   const [uploadError, setUploadError] = useState("");
   const [uploading, setUploading] = useState(false);
   const [discount, setDiscount] = useState(0);
-  const [expiryDate, setExpiryDate] = useState('');
-  const [lowPrice, setLowPrice] = useState('');
+  const [expiryDate, setExpiryDate] = useState("");
+  const [lowPrice, setLowPrice] = useState("");
+  const [timeLeft, setTimeLeft] = useState(0);
   // const [file, setFile] = useState(null);
   // const onFileChange = (e) => {
   //   setFile(e.target.files[0]);
   // };
+  const duration = intervalToDuration({ start: 0, end: timeLeft * 1000 });
+  const formattedDuration = formatDuration(duration, {
+    format: ["days", "hours", "minutes", "seconds"],
+  });
 
   const handleAddProducts = async () => {
     try {
-      if (!productsName || !nameAdmin || !date || !price || !category || !quantity || !size || !codeProducts ) {
-        setUploadError("Please fill out all required fields and select a file.");
+      if (
+        !productsName ||
+        !nameAdmin ||
+        !date ||
+        !price ||
+        !category ||
+        !quantity ||
+        !size ||
+        !codeProducts
+      ) {
+        setUploadError(
+          "Please fill out all required fields and select a file."
+        );
         toast({
           title: "Error",
           description: uploadError,
@@ -56,8 +88,8 @@ function ProductsAdd() {
       formData.append("size", size);
       formData.append("codeProducts", codeProducts);
       formData.append("discountExpiry", expiry);
-      formData.append("discount",  discount);
-      formData.append("lowPrice",  lowPrice);
+      formData.append("discount", discount);
+      formData.append("lowPrice", lowPrice);
       // formData.append("image", file);
       await axios.post(
         `${process.env.REACT_APP_URL}/createProductController`,
@@ -65,7 +97,7 @@ function ProductsAdd() {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            "Authorization": `Bearer ${decoded}`,
+            Authorization: `Bearer ${decoded}`,
           },
         }
       );
@@ -80,7 +112,7 @@ function ProductsAdd() {
     } catch (error) {
       Swal.fire({
         title: "Error!",
-        text:'ກະລຸນາປ້ອນຂໍ້ມູນ',
+        text: "ກະລຸນາປ້ອນຂໍ້ມູນ",
         icon: "error",
         confirmButtonText: "Close",
       });
@@ -89,14 +121,36 @@ function ProductsAdd() {
       setUploading(false);
     }
   };
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date();
+      const expiry = new Date(expiryDate);
+      const secondsLeft = differenceInSeconds(expiry, now);
+      setTimeLeft(secondsLeft);
+    };
 
+    calculateTimeLeft(); // Initial calculation
+
+    const interval = setInterval(() => {
+      calculateTimeLeft();
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [expiryDate]);
   return (
     <Flex direction={{ base: "column", md: "row" }} p={4}>
-    <Box width={{ base: "100%", md: "20%" }} mb={{ base: 4, md: 0 }}>
+      <Box width={{ base: "100%", md: "20%" }} mb={{ base: 4, md: 0 }}>
         <Bar />
       </Box>
       <Box flex="1" p={5}>
-      <Heading
+        <div>
+          {timeLeft > 0 ? (
+            <p>Time left: {formattedDuration}</p>
+          ) : (
+            <p>Promotion has ended</p>
+          )}
+        </div>
+        <Heading
           mb={6}
           fontSize="2xl"
           textAlign="center"
@@ -105,12 +159,17 @@ function ProductsAdd() {
           alignItems="center"
           justifyContent="center"
         >
-          <AiOutlineProduct  size="24px" /> ເພີ່ມສິນຄ້າ
+          <AiOutlineProduct size="24px" /> ເພີ່ມສິນຄ້າ
         </Heading>
-    
 
-        <Stack  spacing={4} p={4} borderWidth={1} borderRadius="md" boxShadow="md">
-          <Stack  spacing={4}>
+        <Stack
+          spacing={4}
+          p={4}
+          borderWidth={1}
+          borderRadius="md"
+          boxShadow="md"
+        >
+          <Stack spacing={4}>
             <FormControl isRequired>
               <FormLabel>Product Category</FormLabel>
               <Select
@@ -219,41 +278,39 @@ function ProductsAdd() {
             <FormControl isRequired>
               <FormLabel>discount</FormLabel>
               <Input
-              type="number"
-              value={discount}
-              onChange={(e) => setDiscount(parseFloat(e.target.value))}
-              placeholder="Discount"
-              required
+                type="number"
+                value={discount}
+                onChange={(e) => setDiscount(parseFloat(e.target.value))}
+                placeholder="Discount"
+                required
               />
             </FormControl>
-                 <FormControl isRequired>
+            <FormControl isRequired>
               <FormLabel>expiryDate</FormLabel>
               <Input
-                 type="date"
-                 value={expiryDate}
-                 onChange={(e) => setExpiryDate(e.target.value)}
-                 placeholder="Discount Expiry Date"
-                 required
+                type="date"
+                value={expiryDate}
+                onChange={(e) => setExpiryDate(e.target.value)}
+                placeholder="Discount Expiry Date"
+                required
               />
             </FormControl>
             <FormControl isRequired>
               <FormLabel>lowPrice</FormLabel>
               <Input
-                 type="Number"
-                 value={lowPrice}
-                 onChange={(e) => setLowPrice(e.target.value)}
-                 placeholder="lowPrice"
-                 required
+                type="Number"
+                value={lowPrice}
+                onChange={(e) => setLowPrice(e.target.value)}
+                placeholder="lowPrice"
+                required
               />
             </FormControl>
           </Stack>
           <Stack spacing={4} direction={{ base: "column", md: "row" }}>
-            <Button onClick={() => navigate("/")}>
-              Cancel
-            </Button>
-            <Button 
-              onClick={handleAddProducts} 
-              colorScheme="teal" 
+            <Button onClick={() => navigate("/")}>Cancel</Button>
+            <Button
+              onClick={handleAddProducts}
+              colorScheme="teal"
               isLoading={uploading}
             >
               ເພີ່ມສິນຄ້າ
